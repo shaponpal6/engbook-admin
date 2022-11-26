@@ -4,7 +4,7 @@ const useTitle = (getTitle) => {
   const [title, setTitle] = useState("");
   useEffect(() => {
     setTitle(getTitle);
-    document.title = `${title} - ToDos Application`;
+    document.title = `${title} - App`;
   }, [getTitle, title]);
   return [title];
 };

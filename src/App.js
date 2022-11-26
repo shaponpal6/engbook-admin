@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState, Component } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router-dom';
@@ -6,6 +6,8 @@ import './App.css';
 import RequireAuth from './Auth/RequireAuth/RequireAuth';
 import { auth } from './Firebase/Firebase.config';
 import Home from './Pages/Home/Home';
+import Header2 from './Components/Header';
+import Vocabulary from './Pages/Vocabulary';
 import Login from './Pages/Login/Login/Login';
 import SignUp from './Pages/Login/SignUp/SignUp';
 export const AuthContext = createContext(null)
@@ -26,9 +28,12 @@ function App() {
     <>
     <Toaster />
     <AuthContext.Provider value={{user, loading, isAuth,setIsAuth}}>
+      {/* <Header2/> */}
     <Routes>
-        <Route path='/' element={<RequireAuth><Home /></RequireAuth>} />
-        <Route path='/home' element={<RequireAuth><Home /></RequireAuth>} />
+        <Route path='/' element={<RequireAuth><Vocabulary /></RequireAuth>} />
+        <Route path='/home' element={<RequireAuth><Vocabulary /></RequireAuth>} />
+        <Route path='/vocabulary' element={<RequireAuth><Vocabulary /></RequireAuth>} />
+        <Route path='/sentence' element={<RequireAuth><Vocabulary /></RequireAuth>} />
         <Route path='/login' element={<Login />} />
         <Route path='/sign-up' element={<SignUp />} />
     </Routes>
