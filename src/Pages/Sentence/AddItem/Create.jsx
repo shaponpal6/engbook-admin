@@ -12,8 +12,9 @@ import styled from "styled-components";
 import { AuthContext } from "../../../App";
 import { auth, db } from "../../../Firebase/Firebase.config";
 
-const collectionName = "vocabularies"
-const CreateTodo = () => {
+const collectionName = "sentences"
+const collectionName2 = "items"
+const CreateTodo = ({docRef, docId}) => {
 
   /* create todo field  */
   const [todoText, setTodoText] = useState("");
@@ -21,7 +22,7 @@ const CreateTodo = () => {
     if (!todoText) return toast.error("Text is empty!");
 
     /* add todo on firebase storage */
-    const todoRef = collection(db, collectionName);
+    const todoRef = collection(db, collectionName, docId, collectionName2);
     await addDoc(todoRef, {
       title: todoText,
       createdAt: Timestamp.now().toDate(),
@@ -45,9 +46,6 @@ const CreateTodo = () => {
         {!isUserVerified &&
         auth?.currentUser?.providerData[0]?.providerId === "password" ? null : (
           <div className="wrapper">
-            <h1>
-              Create <span className="colorize">Vocabulary Type</span>
-            </h1>
             <div className="todo-create-wrapper">
               <input
                 type="text"
@@ -69,7 +67,7 @@ const CreateTodo = () => {
 
 const CreateTodoContainer = styled.div`
   position: relative;
-  margin: 1rem 0rem;
+  margin: 4px 0rem;
   .title {
     display: flex;
     align-items: center;

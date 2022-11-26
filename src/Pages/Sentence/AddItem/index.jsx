@@ -5,34 +5,39 @@ import { BiCheckDouble } from "react-icons/bi";
 import { BsTrash } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import styled from "styled-components";
-import { db } from "../../Firebase/Firebase.config";
-import useVocabularies from "../../Hooks/useVocabularies";
+import { db } from "../../../Firebase/Firebase.config";
+import useVocabularyItems from "../../../Hooks/useVocabularyItems";
 import EditToDo from "./Edit";
-import HomeLayout from "../../Layouts/HomeLayout";
+import HomeLayout from "../../../Layouts/HomeLayout";
 import CreateTodo from "./Create";
-import AddItem from './AddItem';
 
-const collectionName = "vocabularies"
-const Todo = () => {
-  const { toDos, loading } = useVocabularies(collectionName);
-
+const collectionName = "sentences"
+const collectionName2 = "items"
+const Todo = ({open=false, docRef=null, docId=null}) => {
+  const { toDos, loading } = useVocabularyItems(collectionName, docId);
+ 
+ 
+  const [isEdit, setIsEdit] = useState(false);
+  const [updateToDo, setUpdateToDo] = useState("");
+  if (!open || !docRef) return null;
   return (
     <>
-      <HomeLayout>
-        <CreateTodo />
+      <>
+        <CreateTodo docRef={docRef} docId={docId}/>
+        <EditToDo isEdit={isEdit} setIsEdit={setIsEdit} updateToDo={updateToDo} docId={docId}/>
         <TodoContainer>
-          <div className="container">
+          <div className="container" >
             {toDos.length > 0 ? (
               !loading ? (
                 <>
                   <div className="container0">
-                    <div className="container1">
+                    {/* <div className="container1">
                       <div>Name</div>
                       <div className="container2">
                         <div style={{ width: "100px" }} >Action</div>
                         <div style={{ width: "100px" }}>Edit</div>
                       </div>
-                    </div>
+                    </div> */}
                     <div style={{width: '100%'}}>
                       {toDos.map((todo, ind) => <Item key={ind} item={todo} />)}
                     </div>
@@ -47,21 +52,21 @@ const Todo = () => {
             )}
           </div>
         </TodoContainer>
-      </HomeLayout>
+      </>
     </>
   );
 };
 
 const Item = ({ item }) => {
-  const { toDos, loading } = useVocabularies();
+  const { toDos, loading } = useVocabularyItems(item.id);
   const [isEdit, setIsEdit] = useState(false);
-  const [open, setOpen] = useState(false);
   const [updateToDo, setUpdateToDo] = useState("");
-  const docRef = doc(db, collectionName, item.id);
   /* handle remove toDos */
   const handleRemoveItem = async (id) => {
-    const docRef = doc(db, collectionName, id);
-    await deleteDoc(docRef)
+    console.log('id', id)
+    const docRef = doc(db, collectionName, item.id, collectionName2, id);
+    console.log('docRef', await deleteDoc(docRef))
+     await deleteDoc(docRef)
       .then(() => {
         toast.success(`${id} toDos deleted successfully done.`);
       })
@@ -80,22 +85,22 @@ const Item = ({ item }) => {
   /* handle Add Item */
 
   const handleAddItem = (id) => {
-    setOpen(true);
-    // const findToDos = toDos.find((todo) => todo.id === id);
-    // setUpdateToDo({ title: findToDos.todo, id: findToDos.id });
+    setIsEdit(true);
+    const findToDos = toDos.find((todo) => todo.id === id);
+    setUpdateToDo({ title: findToDos.todo, id: findToDos.id });
   };
 
   return (
     <ItemContainer key={item.id}>
-      <EditToDo isEdit={isEdit} setIsEdit={setIsEdit} updateToDo={updateToDo} docId={item.id}/>
-      <div  className="container1">
+      <EditToDo isEdit={isEdit} setIsEdit={setIsEdit} updateToDo={updateToDo} />
+      <div  className="container1" style={{backgroundColor: '#653'}}>
         <div>{item.title}</div>
         <div className="container2">
-          <div>
+          
+          {/* <div>
             <span
               onClick={() => handleAddItem(item.id)}
               className="center check">
-              {/* <BiCheckDouble /> */}
               <span style={{ fontSize: '12px' }}>Add +</span>
             </span>
           </div>
@@ -106,18 +111,19 @@ const Item = ({ item }) => {
             >
               <FiEdit />
             </span>
-          </div>
-          {/* <div>
+          </div> */}
+
+
+          <div>
           <span
             className="cursor-pointer"
             onClick={() => handleRemoveItem(item.id)}
           >
             <BsTrash />
           </span>
-        </div> */}
+        </div>
         </div>
       </div>
-      {open ? <div style={{backgroundColor: '#567', marginBottom: '20px'}}><AddItem docRef={docRef} docId={item.id} open={open}/></div> : null}
     </ItemContainer>
   );
 };

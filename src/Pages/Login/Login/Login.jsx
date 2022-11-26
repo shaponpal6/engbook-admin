@@ -137,7 +137,7 @@ const Login = () => {
             )}
           </div>
           {!reset && <SocialLogin />}
-          <p>
+          <p style={{width: '100%', textAlign: 'center'}}>
             Not yet Account?
             <span
               onClick={() => navigate("/sign-up")}

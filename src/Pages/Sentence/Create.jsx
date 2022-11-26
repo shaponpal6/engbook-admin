@@ -12,7 +12,7 @@ import styled from "styled-components";
 import { AuthContext } from "../../App";
 import { auth, db } from "../../Firebase/Firebase.config";
 
-const collectionName = "vocabularies"
+const collectionName = "sentences"
 const CreateTodo = () => {
 
   /* create todo field  */

@@ -8,7 +8,7 @@
 .form-wrapper {
   position: relative;
   background: var(--secondary-color-alt);
-  width: 500px;
+  width: 100%;
   padding: 3rem;
   color: var(--accent-color);
 }

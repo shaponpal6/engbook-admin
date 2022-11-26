@@ -5,48 +5,21 @@ import { BiCheckDouble } from "react-icons/bi";
 import { BsTrash } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import styled from "styled-components";
-import { db } from "../../../Firebase/Firebase.config";
-import useVocabularies from "../../../Hooks/useVocabularies";
+import { db } from "../../Firebase/Firebase.config";
+import useVocabularies from "../../Hooks/useVocabularies";
 import EditToDo from "./Edit";
-import HomeLayout from "../../../Layouts/HomeLayout";
+import HomeLayout from "../../Layouts/HomeLayout";
 import CreateTodo from "./Create";
+import AddItem from './AddItem';
 
-const collectionName = "vocabularies"
+const collectionName = "sentences"
 const Todo = () => {
-  const { toDos, loading } = useVocabularies();
-  const [isEdit, setIsEdit] = useState(false);
-  const [updateToDo, setUpdateToDo] = useState("");
-  /* handle remove toDos */
-  const handleRemoveToDo = async (id) => {
-    const docRef = doc(db, collectionName, id);
-    await deleteDoc(docRef)
-      .then(() => {
-        toast.success(`${id} toDos deleted successfully done.`);
-      })
-      .catch((err) => toast.error(err.message.split(":")[1]));
-  };
-
-  /* handle edit toDos */
-
-  const handleEditToDos = (id) => {
-    setIsEdit(true);
-    const findToDos = toDos.find((todo) => todo.id === id);
-    setUpdateToDo({ title: findToDos.title, id: findToDos.id });
-  };
-
-  /* handle Add Item */
-
-  const handleAddItem = (id) => {
-    setIsEdit(true);
-    const findToDos = toDos.find((todo) => todo.id === id);
-    setUpdateToDo({ title: findToDos.todo, id: findToDos.id });
-  };
+  const { toDos, loading } = useVocabularies(collectionName);
 
   return (
     <>
       <HomeLayout>
         <CreateTodo />
-        <EditToDo isEdit={isEdit} setIsEdit={setIsEdit} updateToDo={updateToDo} />
         <TodoContainer>
           <div className="container">
             {toDos.length > 0 ? (
@@ -82,7 +55,9 @@ const Todo = () => {
 const Item = ({ item }) => {
   const { toDos, loading } = useVocabularies();
   const [isEdit, setIsEdit] = useState(false);
+  const [open, setOpen] = useState(false);
   const [updateToDo, setUpdateToDo] = useState("");
+  const docRef = doc(db, collectionName, item.id);
   /* handle remove toDos */
   const handleRemoveItem = async (id) => {
     const docRef = doc(db, collectionName, id);
@@ -105,14 +80,14 @@ const Item = ({ item }) => {
   /* handle Add Item */
 
   const handleAddItem = (id) => {
-    setIsEdit(true);
-    const findToDos = toDos.find((todo) => todo.id === id);
-    setUpdateToDo({ title: findToDos.todo, id: findToDos.id });
+    setOpen(true);
+    // const findToDos = toDos.find((todo) => todo.id === id);
+    // setUpdateToDo({ title: findToDos.todo, id: findToDos.id });
   };
 
   return (
     <ItemContainer key={item.id}>
-      <EditToDo isEdit={isEdit} setIsEdit={setIsEdit} updateToDo={updateToDo} />
+      <EditToDo isEdit={isEdit} setIsEdit={setIsEdit} updateToDo={updateToDo} docId={item.id}/>
       <div  className="container1">
         <div>{item.title}</div>
         <div className="container2">
@@ -142,6 +117,7 @@ const Item = ({ item }) => {
         </div> */}
         </div>
       </div>
+      {open ? <div style={{backgroundColor: '#567', marginBottom: '20px'}}><AddItem docRef={docRef} docId={item.id} open={open}/></div> : null}
     </ItemContainer>
   );
 };

@@ -73,7 +73,7 @@ const HomeLayout = (props) => {
                 !auth?.currentUser.emailVerified ? "text-danger" : "colorize"
               }`}
             >
-              {auth?.currentUser?.displayName}
+              {/* {auth?.currentUser?.displayName} */}
               {auth?.currentUser.emailVerified ? (
                 <>
                   <span className="cursor-pointer" title="Verified.">
@@ -106,7 +106,8 @@ const HomeLayout = (props) => {
             </div>
           <div className="action">
             <img
-              width={50}
+              width={24}
+              height={24}
               src={
                 loading
                   ? "https://www.commpartners.com/wp-content/plugins/wp-meta-seo/assets/images/white-loader.gif"
@@ -119,7 +120,7 @@ const HomeLayout = (props) => {
               className="cursor-pointer text-danger d-flex"
             >
               <AiOutlineLogout />
-              Log out
+              {/* Log out */}
             </span>
           </div>
         </div>
@@ -132,11 +133,12 @@ const HomeLayout = (props) => {
 const CreateTodoContainer = styled.div`
   position: relative;
   margin: 1rem 0rem;
-  .menu{
+  .menu a{
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
     padding: 0 6px;
   }
+
   .title {
     display: flex;
     align-items: center;

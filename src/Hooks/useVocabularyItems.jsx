@@ -2,9 +2,9 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth, db } from "../Firebase/Firebase.config";
 
-const collectionName = "vocabularies"
+// const collectionName = "vocabularies"
 const collectionName2 = "items"
-const useVocabularyItems = (docId=null) => {
+const useVocabularyItems = (collectionName, docId=null) => {
   const [toDos, setToDos] = useState([]);
   const [loading, setLoading] = useState(false);
   const getToDos = async () => {
@@ -25,7 +25,7 @@ const useVocabularyItems = (docId=null) => {
   };
 
   useEffect(() => {
-    if(docId) getToDos();
+    if(collectionName !== "" && docId) getToDos();
   }, []);
 
   return { toDos, loading };

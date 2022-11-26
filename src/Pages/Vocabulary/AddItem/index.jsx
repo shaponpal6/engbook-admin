@@ -14,7 +14,7 @@ import CreateTodo from "./Create";
 const collectionName = "vocabularies"
 const collectionName2 = "items"
 const Todo = ({open=false, docRef=null, docId=null}) => {
-  const { toDos, loading } = useVocabularyItems(docId);
+  const { toDos, loading } = useVocabularyItems(collectionName, docId);
  
  
   const [isEdit, setIsEdit] = useState(false);
@@ -63,8 +63,10 @@ const Item = ({ item }) => {
   const [updateToDo, setUpdateToDo] = useState("");
   /* handle remove toDos */
   const handleRemoveItem = async (id) => {
-    const docRef = doc(db, collectionName,item.id, collectionName2, id);
-    await deleteDoc(docRef)
+    console.log('id', id)
+    const docRef = doc(db, collectionName, item.id, collectionName2, id);
+    console.log('docRef', await deleteDoc(docRef))
+     await deleteDoc(docRef)
       .then(() => {
         toast.success(`${id} toDos deleted successfully done.`);
       })

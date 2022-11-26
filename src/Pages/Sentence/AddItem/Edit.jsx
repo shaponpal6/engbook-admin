@@ -4,8 +4,9 @@ import toast from "react-hot-toast";
 import styled from "styled-components";
 import { db } from "../../../Firebase/Firebase.config";
 
-const collectionName = "vocabularies"
-const EditToDo = ({ isEdit, setIsEdit, updateToDo }) => {
+const collectionName = "sentences"
+const collectionName2 = "items"
+const EditToDo = ({ isEdit, setIsEdit, updateToDo, docId }) => {
   const [updateValue, setUpdateValue] = useState("");
   useEffect(() => {
     setUpdateValue(updateToDo?.title || "");
@@ -14,7 +15,7 @@ const EditToDo = ({ isEdit, setIsEdit, updateToDo }) => {
   const handleUpdateToDo = async (event) => {
     event.preventDefault();
     if (updateValue) {
-      const updateRef = doc(db, collectionName, updateToDo.id);
+      const updateRef = doc(db, collectionName, docId, collectionName2, updateToDo.id);
       await updateDoc(updateRef, { title: updateValue }).then(() => {
         toast.success("Update Vocabulary successfully done.");
         setIsEdit(false);

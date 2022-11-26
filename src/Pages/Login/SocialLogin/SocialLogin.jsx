@@ -3,6 +3,7 @@ import {
   useSignInWithFacebook,
   useSignInWithGithub,
   useSignInWithGoogle,
+  // useSignInAnonymously
 } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { BsFacebook, BsGithub, BsGoogle } from "react-icons/bs";
@@ -34,6 +35,10 @@ const SocialLogin = () => {
     githubUser,
     facebookUser,
   ]);
+
+  const signIn = () => {
+    // useSignInAnonymously();
+  }
 
   if (googleLoading || githubLoading || facebookLoading) {
     return (
@@ -67,7 +72,7 @@ const SocialLogin = () => {
         </button>
         <button
           type="button"
-          onClick={() => signInWithFacebook()}
+          onClick={() => signIn()}
           className="btn"
         >
           <BsFacebook />
