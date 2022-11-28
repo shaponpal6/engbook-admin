@@ -67,14 +67,14 @@ const HomeLayout = (props) => {
       <div className="container">
         <div className="title">
           <h3>
-          <Link to='/home/'>EngBook
-            {/* <span
+          <Link to='/home/'>
+            <span
               className={`${
                 !auth?.currentUser.emailVerified ? "text-danger" : "colorize"
               }`}
-            > */}
+            >
               {/* {auth?.currentUser?.displayName} */}
-              {/* {auth?.currentUser.emailVerified ? (
+              {auth?.currentUser.emailVerified ? (
                 <>
                   <span className="cursor-pointer" title="Verified.">
                     <MdVerified />
@@ -96,8 +96,8 @@ const HomeLayout = (props) => {
                     {sending ? "verifying...." : "verify"}
                   </small>
                 </>
-              )} */}
-            {/* </span> */}
+              )}
+            </span>
             </Link>
           </h3>
           <div className="title">

@@ -14,10 +14,10 @@ const useVocabularies = (collectionName) => {
           id: doc.id,
           ...doc.data(),
         }));
-        const currentUserToDos = allTodos.filter(
-          (toDos) => toDos.author.uid === auth?.currentUser?.uid
-        );
-        setToDos(currentUserToDos);
+        // const currentUserToDos = allTodos.filter(
+        //   (toDos) => toDos.author.uid === auth?.currentUser?.uid
+        // );
+        setToDos(allTodos);
         setLoading(false);
       }
     );

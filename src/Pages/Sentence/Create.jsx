@@ -25,10 +25,10 @@ const CreateTodo = () => {
     await addDoc(todoRef, {
       title: todoText,
       createdAt: Timestamp.now().toDate(),
-      author: {
-        name: auth?.currentUser?.displayName,
-        uid: auth?.currentUser?.uid,
-      },
+      // author: {
+      //   name: auth?.currentUser?.displayName,
+      //   uid: auth?.currentUser?.uid,
+      // },
     })
       .then(() => {
         toast.success("Vocabulary Added Successfully.");
