@@ -103,6 +103,9 @@ const HomeLayout = (props) => {
           <div className="title">
                 <h4 className="menu"><Link to='/vocabulary/'>Vocabulary</Link></h4>
                 <h4 className="menu"><Link to='/sentence/'>sentence</Link></h4>
+                <h4 className="menu"><Link to='/grammar/'>Grammar</Link></h4>
+                <h4 className="menu"><Link to='/course/'>Course</Link></h4>
+                <h4 className="menu"><Link to='/todos/'>Todo</Link></h4>
             </div>
           <div className="action">
             <img
