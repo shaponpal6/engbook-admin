@@ -18,6 +18,7 @@ const CreateTodo = ({docRef, docId}) => {
 
   /* create todo field  */
   const [todoText, setTodoText] = useState("");
+  const [todoText2, setTodoText2] = useState("");
   const handleAddTodo = async () => {
     if (!todoText) return toast.error("Text is empty!");
 
@@ -25,6 +26,7 @@ const CreateTodo = ({docRef, docId}) => {
     const todoRef = collection(db, collectionName, docId, collectionName2);
     await addDoc(todoRef, {
       title: todoText,
+      desc: todoText2,
       createdAt: Timestamp.now().toDate(),
       // author: {
       //   name: auth?.currentUser?.displayName,
@@ -34,6 +36,7 @@ const CreateTodo = ({docRef, docId}) => {
       .then(() => {
         toast.success("Vocabulary Added Successfully.");
         setTodoText("");
+        setTodoText2("");
       })
       .catch((err) => console.log(err));
   };
@@ -52,11 +55,20 @@ const CreateTodo = ({docRef, docId}) => {
                 id="create-todo"
                 onChange={(e) => setTodoText(e.target.value)}
                 value={todoText}
-                placeholder="Create Vocabulary"
+                placeholder="Create grammar"
               />
               <button className="btn" onClick={handleAddTodo}>
                 <BsSearch />
               </button>
+            </div>
+            <div className="todo-create-wrapper">
+              <input
+                type="text"
+                id="create-todo"
+                onChange={(e) => setTodoText2(e.target.value)}
+                value={todoText2}
+                placeholder="Add Description"
+              />
             </div>
           </div>
         )}

@@ -46,7 +46,7 @@ const CreateTodo = () => {
         auth?.currentUser?.providerData[0]?.providerId === "password" ? null : (
           <div className="wrapper">
             <h2>
-               <span className="colorize">Create Vocabulary Type</span>
+               <span className="colorize">Create Grammar Type</span>
             </h2>
             <div className="todo-create-wrapper">
               <input
@@ -54,7 +54,7 @@ const CreateTodo = () => {
                 id="create-todo"
                 onChange={(e) => setTodoText(e.target.value)}
                 value={todoText}
-                placeholder="Create Vocabulary"
+                placeholder="Create grammar"
               />
               <button className="btn" onClick={handleAddTodo}>
                 <BsSearch />
