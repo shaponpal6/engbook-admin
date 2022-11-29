@@ -10,6 +10,7 @@ import Header2 from './Components/Header';
 import Vocabulary from './Pages/Vocabulary';
 import Sentence from './Pages/Sentence';
 import Grammar from './Pages/Grammar';
+import Course from './Pages/Course';
 import Login from './Pages/Login/Login/Login';
 import SignUp from './Pages/Login/SignUp/SignUp';
 import Todo from './Pages/Vocabulary/index';
