@@ -13,6 +13,9 @@ import { AuthContext } from "../App";
 import Header from "../Components/Header";
 import { auth, db } from "../Firebase/Firebase.config";
 import { Link } from 'react-router-dom'
+import Todo from '../Pages/Vocabulary/index';
+import Sidebar from "../Components/Sidebar";
+import Menu from "../Components/Menu";
 
 const HomeLayout = (props) => {
   const { loading, setIsAuth } = useContext(AuthContext);
@@ -64,10 +67,15 @@ const HomeLayout = (props) => {
 
   return (
     <CreateTodoContainer>
+      
+      
       <div className="container">
+      <Sidebar/>
+      <div>
+      
         <div className="title">
           <h3>
-          <Link to='/home/'>EngBook
+          <Link to='/home/'>
             {/* <span
               className={`${
                 !auth?.currentUser.emailVerified ? "text-danger" : "colorize"
@@ -100,15 +108,9 @@ const HomeLayout = (props) => {
             {/* </span> */}
             </Link>
           </h3>
-          <div className="title">
-                <h4 className="menu"><Link to='/vocabulary/'>Vocabulary</Link></h4>
-                <h4 className="menu"><Link to='/sentence/'>sentence</Link></h4>
-                <h4 className="menu"><Link to='/grammar/'>Grammar</Link></h4>
-                <h4 className="menu"><Link to='/course/'>Course</Link></h4>
-                <h4 className="menu"><Link to='/todos/'>Todo</Link></h4>
-            </div>
+          <Menu/>
           <div className="action">
-            <img
+            {/* <img
               width={24}
               height={24}
               src={
@@ -117,7 +119,7 @@ const HomeLayout = (props) => {
                   : auth?.currentUser?.photoURL
               }
               alt={auth?.currentUser?.displayName}
-            />
+            /> */}
             <span
               onClick={handleLogOut}
               className="cursor-pointer text-danger d-flex"
@@ -128,6 +130,7 @@ const HomeLayout = (props) => {
           </div>
         </div>
         {props.children ?? null}
+      </div>
       </div>
     </CreateTodoContainer>
   );

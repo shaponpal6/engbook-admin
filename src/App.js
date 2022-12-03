@@ -11,6 +11,7 @@ import Vocabulary from './Pages/Vocabulary';
 import Sentence from './Pages/Sentence';
 import Grammar from './Pages/Grammar';
 import Course from './Pages/Course';
+import Improve from './Pages/Improve';
 import Login from './Pages/Login/Login/Login';
 import SignUp from './Pages/Login/SignUp/SignUp';
 import Todo from './Pages/Vocabulary/index';
@@ -34,6 +35,7 @@ function App() {
     <AuthContext.Provider value={{user, loading, isAuth,setIsAuth}}>
       {/* <Header2/> */}
     <Routes>
+        <Route path='/improve' element={<RequireAuth><Improve /></RequireAuth>} />
         <Route path='/' element={<RequireAuth><Vocabulary /></RequireAuth>} />
         <Route path='/home' element={<RequireAuth><Vocabulary /></RequireAuth>} />
         <Route path='/vocabulary' element={<RequireAuth><Vocabulary /></RequireAuth>} />

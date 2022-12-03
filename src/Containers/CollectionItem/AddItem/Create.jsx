@@ -4,16 +4,18 @@ import React, { useContext, useState } from "react";
 import { useSendEmailVerification } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
 import { AiOutlineLogout } from "react-icons/ai";
-import { BsReply } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 import { GoUnverified } from "react-icons/go";
 import { MdVerified } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { AuthContext } from "../../App";
-import { auth, db } from "../../Firebase/Firebase.config";
+import { AuthContext } from "../../../App";
+import { auth, db } from "../../../Firebase/Firebase.config";
+import TextExtract from "../../../Components/TextExtract"
 
-const collectionName = "sentences"
-const CreateTodo = () => {
+// const collectionName = "sentences"
+const collectionName2 = "items"
+const CreateTodo = ({collectionName, docRef, docId}) => {
 
   /* create todo field  */
   const [todoText, setTodoText] = useState("");
@@ -21,7 +23,7 @@ const CreateTodo = () => {
     if (!todoText) return toast.error("Text is empty!");
 
     /* add todo on firebase storage */
-    const todoRef = collection(db, collectionName);
+    const todoRef = collection(db, collectionName, docId, collectionName2);
     await addDoc(todoRef, {
       title: todoText,
       createdAt: Timestamp.now().toDate(),
@@ -36,6 +38,24 @@ const CreateTodo = () => {
       })
       .catch((err) => console.log(err));
   };
+
+    /**
+   * Use Batch Update
+   * @param {*} items 
+   * @returns 
+   */
+     const batchUpdate = async (items) => {
+      if (!items || items.length < 1) return toast.error("list is empty!");
+      const todoRef = collection(db, collectionName, docId, collectionName2);
+      items.forEach((doc) => {
+         addDoc(todoRef, {
+          title: doc,
+          createdAt: Timestamp.now().toDate(),
+        });
+      });
+    };
+
+
   /* check user isVerified or not */
   const isUserVerified = auth?.currentUser?.emailVerified;
 
@@ -45,9 +65,6 @@ const CreateTodo = () => {
         {!isUserVerified &&
         auth?.currentUser?.providerData[0]?.providerId === "password" ? null : (
           <div className="wrapper">
-            <p>
-               <span className="colorize">Create Sentence Type</span>
-            </p>
             <div className="todo-create-wrapper">
               <input
                 type="text"
@@ -57,9 +74,10 @@ const CreateTodo = () => {
                 placeholder="Create Vocabulary"
               />
               <button className="btn" onClick={handleAddTodo}>
-                <BsReply />
+                <BsSearch />
               </button>
             </div>
+            <TextExtract batchUpdate={batchUpdate} />
           </div>
         )}
       </div>
@@ -69,7 +87,7 @@ const CreateTodo = () => {
 
 const CreateTodoContainer = styled.div`
   position: relative;
-  margin: 1rem 0rem;
+  margin: 4px 0rem;
   .title {
     display: flex;
     align-items: center;

@@ -1,5 +1,5 @@
 import { signOut } from "firebase/auth";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { addDoc,writeBatch, collection, Timestamp } from "firebase/firestore";
 import React, { useContext, useState } from "react";
 import { useSendEmailVerification } from "react-firebase-hooks/auth";
 import toast from "react-hot-toast";
@@ -11,24 +11,19 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AuthContext } from "../../App";
 import { auth, db } from "../../Firebase/Firebase.config";
+import TextExtract from "../../Components/TextExtract"
 
-const collectionName = "sentences"
-const CreateTodo = () => {
+// const collectionName = "sentences"
+const CreateTodo = ({ collectionName }) => {
 
   /* create todo field  */
   const [todoText, setTodoText] = useState("");
   const handleAddTodo = async () => {
     if (!todoText) return toast.error("Text is empty!");
-
-    /* add todo on firebase storage */
     const todoRef = collection(db, collectionName);
     await addDoc(todoRef, {
       title: todoText,
       createdAt: Timestamp.now().toDate(),
-      // author: {
-      //   name: auth?.currentUser?.displayName,
-      //   uid: auth?.currentUser?.uid,
-      // },
     })
       .then(() => {
         toast.success("Vocabulary Added Successfully.");
@@ -36,17 +31,35 @@ const CreateTodo = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  /**
+   * Use Batch Update
+   * @param {*} items 
+   * @returns 
+   */
+  const batchUpdate = async (items) => {
+    if (!items || items.length < 1) return toast.error("list is empty!");
+    const todoRef = collection(db, collectionName);
+    items.forEach((doc) => {
+       addDoc(todoRef, {
+        title: doc,
+        createdAt: Timestamp.now().toDate(),
+      });
+    });
+  };
+  
   /* check user isVerified or not */
   const isUserVerified = auth?.currentUser?.emailVerified;
 
   return (
     <CreateTodoContainer>
+      
       <div className="container">
         {!isUserVerified &&
-        auth?.currentUser?.providerData[0]?.providerId === "password" ? null : (
+          auth?.currentUser?.providerData[0]?.providerId === "password" ? null : (
           <div className="wrapper">
             <p>
-               <span className="colorize">Create Sentence Type</span>
+              <span className="colorize">Create Sentence Type</span>
             </p>
             <div className="todo-create-wrapper">
               <input
@@ -60,8 +73,10 @@ const CreateTodo = () => {
                 <BsReply />
               </button>
             </div>
+            <TextExtract batchUpdate={batchUpdate} />
           </div>
         )}
+
       </div>
     </CreateTodoContainer>
   );
