@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import HomeLayout from "../../Layouts/HomeLayout";
 import CollectionItem from '../../Containers/CollectionItem'
 
-const collectionName = "courses"
+const collectionName = "news"
 const ImprovePage = () => {
 
   return (

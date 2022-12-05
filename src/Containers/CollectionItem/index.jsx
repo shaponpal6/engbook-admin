@@ -15,6 +15,7 @@ import AddItem from './AddItem';
 // const collectionName = "sentences"
 const Todo = ({collectionName}) => {
   const { toDos, loading } = useVocabularies(collectionName);
+  console.log('collectionName', collectionName)
 
   return (
     <>

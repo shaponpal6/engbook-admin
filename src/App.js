@@ -12,9 +12,13 @@ import Sentence from './Pages/Sentence';
 import Grammar from './Pages/Grammar';
 import Course from './Pages/Course';
 import Improve from './Pages/Improve';
+import News from './Pages/News';
+import Story from './Pages/Story';
+import Podcast from './Pages/Podcast';
+import Quiz from './Pages/Quiz';
 import Login from './Pages/Login/Login/Login';
 import SignUp from './Pages/Login/SignUp/SignUp';
-import Todo from './Pages/Vocabulary/index';
+import Todo from './Pages/Todos';
 export const AuthContext = createContext(null)
 function App() {
   const [isAuth, setIsAuth] = useState(false)
@@ -42,6 +46,10 @@ function App() {
         <Route path='/sentence' element={<RequireAuth><Sentence /></RequireAuth>} />
         <Route path='/grammar' element={<RequireAuth><Grammar /></RequireAuth>} />
         <Route path='/course' element={<RequireAuth><Course /></RequireAuth>} />
+        <Route path='/news' element={<RequireAuth><News /></RequireAuth>} />
+        <Route path='/podcast' element={<RequireAuth><Podcast /></RequireAuth>} />
+        <Route path='/story' element={<RequireAuth><Story /></RequireAuth>} />
+        <Route path='/quiz' element={<RequireAuth><Quiz /></RequireAuth>} />
         <Route path='/todos' element={<RequireAuth><Todo /></RequireAuth>} />
         <Route path='/login' element={<Login />} />
         <Route path='/sign-up' element={<SignUp />} />

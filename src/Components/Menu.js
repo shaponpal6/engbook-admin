@@ -8,6 +8,10 @@ function Sidebar() {
         <h4 className="menu sidebar-item"><Link to='/sentence/'>sentence</Link></h4>
         <h4 className="menu sidebar-item"><Link to='/grammar/'>Grammar</Link></h4>
         <h4 className="menu sidebar-item"><Link to='/course/'>Course</Link></h4>
+        <h4 className="menu sidebar-item"><Link to='/podcast/'>Podcast</Link></h4>
+        <h4 className="menu sidebar-item"><Link to='/story/'>Story</Link></h4>
+        <h4 className="menu sidebar-item"><Link to='/news/'>News</Link></h4>
+        <h4 className="menu sidebar-item"><Link to='/quiz/'>Quiz</Link></h4>
         <h4 className="menu sidebar-item"><Link to='/todos/'>Todo</Link></h4>
     </div>
   )

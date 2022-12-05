@@ -9,7 +9,7 @@ const options = [
 ];
 
 function TextExtract({batchUpdate=()=>null}) {
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
   const [type, setType] = useState('')
   const [content, setContent] = useState('')
   const [extract, setExtract] = useState([])
